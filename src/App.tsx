@@ -4,7 +4,7 @@ import {TodoList} from "./components/TodoList";
 
 export type FilterValuesType = "all" | "active" | "completed"
 
-function App() {
+export function App() {
     let [tasks, setTasks] = useState([
         {id: 1, text: 'Blood sport', isDone: true},
         {id: 2, text: 'Spider-Man', isDone: true},
@@ -18,7 +18,6 @@ function App() {
         let filteredTasks = tasks.filter(t => t.id !== id)
         setTasks(filteredTasks)
     }
-
 
     let [filter, setFilter] = useState<FilterValuesType>('all')
 
@@ -35,7 +34,6 @@ function App() {
         setFilter(value)
     }
 
-
     return (
         <div className="App">
             <TodoList
@@ -46,5 +44,3 @@ function App() {
         </div>
     );
 }
-
-export default App;
