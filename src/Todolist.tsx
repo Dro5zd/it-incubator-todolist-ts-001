@@ -28,18 +28,22 @@ export function Todolist(props: PropsType) {
         setTitle('')
     }
 
-    const onKeyPressAddTaskHandler = ({charCode}: KeyboardEvent<HTMLInputElement>)=> {
-        if ( charCode === 13) {
+    const onKeyPressAddTaskHandler = ({charCode}: KeyboardEvent<HTMLInputElement>) => {
+        if (charCode === 13) {
             props.addTask(title)
             setTitle('')
         }
+    }
+
+    const onChangeFilterHandler = (value: FilterValuesType) => {
+        props.changeFilter(value)
     }
 
     return <div>
         <h3>{props.title}</h3>
         <div>
             <input value={title} onChange={onChangeInputHandler}
-            onKeyPress={onKeyPressAddTaskHandler}/>
+                   onKeyPress={onKeyPressAddTaskHandler}/>
             <button onClick={onClickAddTaskButtonHandler}>+</button>
         </div>
         <ul>
@@ -55,19 +59,12 @@ export function Todolist(props: PropsType) {
             }
         </ul>
         <div>
-            <button onClick={() => {
-                props.changeFilter('all')
-            }}>
-                All
-            </button>
-            <button onClick={() => {
-                props.changeFilter('active')
-            }}>
+            <button onClick={() => onChangeFilterHandler('all')}>
+                All</button>
+            <button onClick={() => onChangeFilterHandler('active')}>
                 Active
             </button>
-            <button onClick={() => {
-                props.changeFilter('completed')
-            }}>
+            <button onClick={() => onChangeFilterHandler('completed')}>
                 Completed
             </button>
         </div>
