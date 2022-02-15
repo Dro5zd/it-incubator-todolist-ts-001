@@ -11,7 +11,6 @@ type PropsType = {
     title: string
     tasks: Array<TaskType>
     removeTask: (id: string) => void
-    changeFilter: (value: FilterValuesType) => void
     addTask: (title: string) => void
 }
 
@@ -20,13 +19,13 @@ export function Todolist(props: PropsType) {
 
     let [filter, setFilter] = useState<FilterValuesType>("all");
 
-    let tasksForTodolist = tasks;
+    let tasksForTodolist = props.tasks;
 
     if (filter === "active") {
-        tasksForTodolist = tasks.filter(t => t.isDone);
+        tasksForTodolist = props.tasks.filter(t => t.isDone);
     }
     if (filter === "completed") {
-        tasksForTodolist = tasks.filter(t => !t.isDone);
+        tasksForTodolist = props.tasks.filter(t => !t.isDone);
     }
 
     function changeFilter(value: FilterValuesType) {
@@ -54,7 +53,7 @@ export function Todolist(props: PropsType) {
     }
 
     const onChangeFilterHandler = (value: FilterValuesType) => {
-        props.changeFilter(value)
+        changeFilter(value)
     }
 
     // const removeTaskHandler = (Tid: string) => {
@@ -70,7 +69,7 @@ export function Todolist(props: PropsType) {
         </div>
         <ul>
             {
-                props.tasks.map(t => {
+                tasksForTodolist.map(t => {
                         const removeTaskHandler = () => {
                             props.removeTask(t.id)
                         }
