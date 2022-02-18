@@ -33,8 +33,6 @@ export function Todolist(props: PropsType) {
     }
 
 
-
-
     let [title, setTitle] = useState('')
     const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
