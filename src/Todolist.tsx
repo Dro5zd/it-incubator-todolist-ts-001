@@ -59,7 +59,8 @@ export function Todolist(props: PropsType) {
                    onChange={onChangeHandler}
                    onKeyPress={onKeyPressHandler}
             />
-            <button onClick={addTask}>+</button>
+            {/*<button onClick={addTask}>+</button>*/}
+            <Button name='+' callback={() => addTask()}/>
         </div>
         <ul>
             {
@@ -70,7 +71,8 @@ export function Todolist(props: PropsType) {
                     return <li key={t.id}>
                         <input type="checkbox" checked={t.isDone}/>
                         <span>{t.title}</span>
-                        <button onClick={() => onClickHandler(t.id)}>x</button>
+                        {/*<button onClick={() => onClickHandler(t.id)}>x</button>*/}
+                        <Button name='x' callback={() => onClickHandler(t.id)}/>
                     </li>
                 })
             }
@@ -80,10 +82,15 @@ export function Todolist(props: PropsType) {
             {/*<button onClick={ onActiveClickHandler }>Active</button>*/}
             {/*<button onClick={ onCompletedClickHandler }>Completed</button>*/}
 
-            <button onClick={() => changeFilterHandler('all')}>All</button>
-            <button onClick={() => changeFilterHandler('active')}>Active</button>
-            <button onClick={() => changeFilterHandler('completed')}>Completed</button>
-            <Button name='X' callback={()=>{}}/>
+            {/*<button onClick={() => changeFilterHandler('all')}>All</button>*/}
+            {/*<button onClick={() => changeFilterHandler('active')}>Active</button>*/}
+            {/*<button onClick={() => changeFilterHandler('completed')}>Completed</button>*/}
+
+            <Button name='All' callback={() => changeFilterHandler('all')}/>
+            <Button name='Completed' callback={() => changeFilterHandler('completed')}/>
+            <Button name='Active' callback={() => changeFilterHandler('active')}/>
+
+
         </div>
     </div>
 }
