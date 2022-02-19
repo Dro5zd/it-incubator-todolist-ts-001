@@ -1,5 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValuesType} from './App';
+import {Button} from "./conponents/Button";
 
 type TaskType = {
     id: string
@@ -28,8 +29,8 @@ export function Todolist(props: PropsType) {
         setTitle(e.currentTarget.value)
     }
 
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.charCode === 13) {
+    const onKeyPressHandler = ({charCode}: KeyboardEvent<HTMLInputElement>) => {
+        if (charCode === 13) {
             addTask();
         }
     }
@@ -82,6 +83,7 @@ export function Todolist(props: PropsType) {
             <button onClick={() => changeFilterHandler('all')}>All</button>
             <button onClick={() => changeFilterHandler('active')}>Active</button>
             <button onClick={() => changeFilterHandler('completed')}>Completed</button>
+            <Button name='X' callback={()=>{}}/>
         </div>
     </div>
 }

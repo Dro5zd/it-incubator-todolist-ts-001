@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
 import { v1 } from 'uuid';
-import {Button} from "./conponents/Button";
 
 export type FilterValuesType = "all" | "active" | "completed";
 
@@ -51,7 +50,7 @@ function App() {
                       removeTask={removeTask}
                       changeFilter={changeFilter}
                       addTask={addTask} />
-            <Button/>
+
         </div>
     );
 }
