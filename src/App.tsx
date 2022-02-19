@@ -16,7 +16,7 @@ function App() {
     ]);
 
     function removeTask(id: string) {
-        let filteredTasks = tasks.filter(t => t.id != id);
+        let filteredTasks = tasks.filter(t => t.id !== id);
         setTasks(filteredTasks);
     }
 
@@ -31,10 +31,10 @@ function App() {
     let tasksForTodolist = tasks;
 
     if (filter === "active") {
-        tasksForTodolist = tasks.filter(t => t.isDone === false);
+        tasksForTodolist = tasks.filter(t => !t.isDone);
     }
     if (filter === "completed") {
-        tasksForTodolist = tasks.filter(t => t.isDone === true);
+        tasksForTodolist = tasks.filter(t => t.isDone);
     }
 
     function changeFilter(value: FilterValuesType) {
