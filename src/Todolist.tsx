@@ -1,6 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValuesType} from './App';
 import {Button} from "./conponents/Button";
+import {FullInput} from "./conponents/Full input";
 
 type TaskType = {
     id: string
@@ -59,6 +60,7 @@ export function Todolist(props: PropsType) {
                    onChange={onChangeHandler}
                    onKeyPress={onKeyPressHandler}
             />
+            <FullInput/>
             {/*<button onClick={addTask}>+</button>*/}
             <Button name='+' callback={() => addTask()}/>
         </div>
