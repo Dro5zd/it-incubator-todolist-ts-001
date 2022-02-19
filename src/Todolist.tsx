@@ -19,22 +19,22 @@ type PropsType = {
 
 export function Todolist(props: PropsType) {
 
-    let [title, setTitle] = useState("")
-
-    const addTask = () => {
-        props.addTask(title)
-        setTitle('')
-    }
-
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
-    }
-
-    const onKeyPressHandler = ({charCode}: KeyboardEvent<HTMLInputElement>) => {
-        if (charCode === 13) {
-            addTask();
-        }
-    }
+    // let [title, setTitle] = useState("")
+    //
+    // const addTask = () => {
+    //     props.addTask(title)
+    //     setTitle('')
+    // }
+    //
+    // const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    //     setTitle(e.currentTarget.value)
+    // }
+    //
+    // const onKeyPressHandler = ({charCode}: KeyboardEvent<HTMLInputElement>) => {
+    //     if (charCode === 13) {
+    //         addTask();
+    //     }
+    // }
 
     // const onAllClickHandler = () => {
     //     props.changeFilter('all')
@@ -53,16 +53,21 @@ export function Todolist(props: PropsType) {
         return props.removeTask(Tid)
     }
 
+    const callbackForFullInput = (title: string) => {
+        props.addTask(title)
+    }
+
     return <div>
         <h3>{props.title}</h3>
         <div>
-            <input value={title}
-                   onChange={onChangeHandler}
-                   onKeyPress={onKeyPressHandler}
-            />
-            <FullInput/>
+            <FullInput callback={callbackForFullInput}/>
+            {/*<input value={title}*/}
+            {/*       onChange={onChangeHandler}*/}
+            {/*       onKeyPress={onKeyPressHandler}*/}
+            {/*/>*/}
+
             {/*<button onClick={addTask}>+</button>*/}
-            <Button name='+' callback={() => addTask()}/>
+            {/*<Button name='+' callback={() => addTask()}/>*/}
         </div>
         <ul>
             {
