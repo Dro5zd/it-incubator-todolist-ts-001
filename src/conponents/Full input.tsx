@@ -12,6 +12,7 @@ export const FullInput = (props: FullInputProps) => {
         setTitle(e.currentTarget.value)
     }
 
+
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             addTask();
@@ -19,7 +20,7 @@ export const FullInput = (props: FullInputProps) => {
     }
 
         const addTask = () => {
-            props.callback(title)
+            props.callback(title.trim())
             setTitle('')
         }
 
