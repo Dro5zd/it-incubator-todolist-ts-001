@@ -57,8 +57,14 @@ function App() {
     function addTask(title: string, todolistId: string) {
         let task = {id: v1(), title: title, isDone: false};
         let todolistTasks = tasks[todolistId]
-        tasks[todolistId]=[task, ...todolistTasks]
+        tasks[todolistId] = [task, ...todolistTasks]
         setTasks({...tasks});
+    }
+
+    function removeTodolist(id: string) {
+        setTodolists(todolists.filter(r => r.id !== id))
+        delete tasks[id]
+        setTasks({...tasks})
     }
 
 
@@ -71,7 +77,7 @@ function App() {
         // }
     }
 
-    const ChangeStatus = (id: string, isDone: boolean, todolistId:string) => {
+    const ChangeStatus = (id: string, isDone: boolean, todolistId: string) => {
         // setTasks(tasks.map(i => i.id === id ? {...i, isDone} : i))
         let todolistTasks = tasks[todolistId]
         let task = todolistTasks.find(t => t.id === id)
@@ -105,6 +111,7 @@ function App() {
                     addTask={addTask}
                     ChangeStatus={ChangeStatus}
                     filter={tl.filter}
+                    removeTodolist={removeTodolist}
                 />
             })}
         </div>
