@@ -12,9 +12,9 @@ type TodolistPropsType = {
     id: string
     title: string,
     tasks: ObjectType[]
-    removeTask: (id: string) => void
-    addTask: (title: string) => void
-    ChangeStatus: (taskId: string, isDone: boolean) => void
+    removeTask: (id: string, todolistId: string) => void
+    addTask: (title: string, todolistId: string) => void
+    ChangeStatus: (taskId: string, isDone: boolean, todolistId: string) => void
     changeFilter: (filter: FilterValuesType, todolistId: string) => void
     filter: FilterValuesType
 }
@@ -29,7 +29,7 @@ export const Todolist = (props: TodolistPropsType) => {
     }
     const onClickAddTaskButtonHandler = () => {
         if (title.trim() !== '') {
-            props.addTask(title.trim())
+            props.addTask(title.trim(), props.id)
             setTitle('')
         } else {
             setError('Field is require')
@@ -46,8 +46,8 @@ export const Todolist = (props: TodolistPropsType) => {
         props.changeFilter(value, todolistId)
 
     }
-    const onClickRemoveTasksButtonHandler = (iId: string) => {
-        props.removeTask(iId)
+    const onClickRemoveTasksButtonHandler = (iId: string, todolistId:string) => {
+        props.removeTask(iId, todolistId)
     }
 
 
@@ -69,12 +69,12 @@ export const Todolist = (props: TodolistPropsType) => {
                     props.tasks.map((i) => {
 
                         const changeStatusHandler = (event: ChangeEvent<HTMLInputElement>) => {
-                            props.ChangeStatus(i.id, event.currentTarget.checked)
+                            props.ChangeStatus(i.id, event.currentTarget.checked, props.id)
                         }
                         return (
                             <li key={i.id}
                                 className={i.isDone ? classes.isDone : ''}>
-                                <button onClick={() => onClickRemoveTasksButtonHandler(i.id)}>✘</button>
+                                <button onClick={() => onClickRemoveTasksButtonHandler(i.id, props.id)}>✘</button>
                                 <input type="checkbox"
                                        checked={i.isDone}
                                        onChange={changeStatusHandler}
