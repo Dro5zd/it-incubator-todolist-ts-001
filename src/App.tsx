@@ -46,7 +46,7 @@ function App() {
 
 
     function changeFilter(value: FilterValuesType, todolistId: string) {
-        setTodolists(todolists.map(tl=>tl.id === todolistId ? {...tl, filter: value}: tl))
+        setTodolists(todolists.map(tl => tl.id === todolistId ? {...tl, filter: value} : tl))
         // let todolist = todolists.find(tl=> tl.id === todolistId)
         // if (todolist){
         //     todolist.filter = value
@@ -55,11 +55,12 @@ function App() {
     }
 
     const ChangeStatus = (id: string, isDone: boolean) => {
-        let task = tasks.find(t => t.id === id)
-        if (task) {
-            task.isDone = isDone
-            setTasks([...tasks])
-        }
+        setTasks(tasks.map(i => i.id === id ? {...i, isDone} : i))
+        // let task = tasks.find(t => t.id === id)
+        // if (task) {
+        //     task.isDone = isDone
+        //     setTasks([...tasks])
+        // }
     }
 
 
@@ -86,7 +87,7 @@ function App() {
                     ChangeStatus={ChangeStatus}
                     filter={tl.filter}
                 />
-            } )}
+            })}
         </div>
     );
 }
