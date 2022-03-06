@@ -7,6 +7,10 @@ export type FilterValuesType = 'all' | 'active' | 'completed';
 
 function App() {
 
+    let [todolist, setTodolist] = useState([
+        {i}
+    ])
+
     let [tasks, setTasks] = useState([
         {id: v1(), title: 'HTML&CSS', isDone: true},
         {id: v1(), title: 'JS', isDone: true},
