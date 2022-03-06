@@ -15,7 +15,7 @@ type TodolistPropsType = {
     removeTask: (id: string) => void
     addTask: (title: string) => void
     ChangeStatus: (taskId: string, isDone: boolean) => void
-    changeFilter: (filter: FilterValuesType) => void
+    changeFilter: (filter: FilterValuesType, todolistId: string) => void
     filter: FilterValuesType
 }
 
@@ -42,8 +42,9 @@ export const Todolist = (props: TodolistPropsType) => {
             onClickAddTaskButtonHandler()
         }
     }
-    const onClickChangeFilterHandler = (value: FilterValuesType) => {
-        props.changeFilter(value)
+    const onClickChangeFilterHandler = (value: FilterValuesType, todolistId: string) => {
+        props.changeFilter(value, todolistId)
+
     }
     const onClickRemoveTasksButtonHandler = (iId: string) => {
         props.removeTask(iId)
@@ -87,13 +88,13 @@ export const Todolist = (props: TodolistPropsType) => {
 
             <div>
                 <button className={props.filter === 'all' ? classes.activeFilter : ''}
-                        onClick={() => onClickChangeFilterHandler('all')}>All
+                        onClick={() => onClickChangeFilterHandler('all', props.id)}>All
                 </button>
                 <button className={props.filter === 'active' ? classes.activeFilter : ''}
-                        onClick={() => onClickChangeFilterHandler('active')}>Active
+                        onClick={() => onClickChangeFilterHandler('active', props.id)}>Active
                 </button>
                 <button className={props.filter === 'completed' ? classes.activeFilter : ''}
-                        onClick={() => onClickChangeFilterHandler('completed')}>Completed
+                        onClick={() => onClickChangeFilterHandler('completed', props.id)}>Completed
                 </button>
             </div>
         </div>
