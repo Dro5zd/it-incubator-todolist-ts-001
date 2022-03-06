@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {FilterValuesType} from "./App";
+import {FilterValuesType} from './App';
 import classes from './Todolist.module.css'
 
 export type ObjectType = {
@@ -9,6 +9,7 @@ export type ObjectType = {
 }
 
 type TodolistPropsType = {
+    id: string
     title: string,
     tasks: ObjectType[]
     removeTask: (id: string) => void
@@ -62,7 +63,7 @@ export const Todolist = (props: TodolistPropsType) => {
                 {error && <div className={classes.errorMessage}>{error}</div>}
             </div>
 
-            <ul >
+            <ul>
                 {
                     props.tasks.map((i) => {
 
