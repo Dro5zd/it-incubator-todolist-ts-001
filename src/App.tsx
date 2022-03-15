@@ -102,35 +102,32 @@ function App() {
 
 
     return (
-        <div className="App">
-            <AddItemForm
-                addItem={addTodolist}
-            />
-            {todolists.map(tl => {
+        <div>
+            <AddItemForm addItem={addTodolist}/>
+            <div className="App">
+                {todolists.map(tl => {
 
-                let tasksForTodolist = tasksObj[tl.id];
+                    let tasksForTodolist = tasksObj[tl.id];
 
-                if (tl.filter === 'active') {
-                    tasksForTodolist = tasksForTodolist.filter(t => !t.isDone);
-                }
-                if (tl.filter === 'completed') {
-                    tasksForTodolist = tasksForTodolist.filter(t => t.isDone);
-                }
-                return <Todolist
-                    key={tl.id}
-                    id={tl.id}
-                    title={tl.title}
-                    tasks={tasksForTodolist}
-                    removeTask={removeTask}
-                    changeFilter={changeFilter}
-                    addTask={addTask}
-                    ChangeStatus={ChangeStatus}
-                    filter={tl.filter}
-                    removeTodolist={removeTodolist}
-                />
-
-
-            })}
+                    if (tl.filter === 'active') {
+                        tasksForTodolist = tasksForTodolist.filter(t => !t.isDone);
+                    }
+                    if (tl.filter === 'completed') {
+                        tasksForTodolist = tasksForTodolist.filter(t => t.isDone);
+                    }
+                    return <Todolist
+                        key={tl.id}
+                        id={tl.id}
+                        title={tl.title}
+                        tasks={tasksForTodolist}
+                        removeTask={removeTask}
+                        changeFilter={changeFilter}
+                        addTask={addTask}
+                        ChangeStatus={ChangeStatus}
+                        filter={tl.filter}
+                        removeTodolist={removeTodolist}
+                    />})}
+            </div>
         </div>
     );
 }

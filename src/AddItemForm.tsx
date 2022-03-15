@@ -1,5 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import classes from './Todolist.module.css';
+import s from './Todolist.module.css';
+import {TextField} from '@mui/material';
 
 
 type AddItemFormPropsType = {
@@ -30,16 +31,22 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
     }
 
     return (
-        <div>
-            <div>
-                <input onKeyPress={onKeyPressHandler}
-                       value={title}
-                       onChange={onChangeInputHandler}
-                       className={error ? classes.error : ''}
-                />
-                <button onClick={onClickAddTaskButtonHandler}>+</button>
-                {error && <div className={classes.errorMessage}>{error}</div>}
-            </div>
+        <div className={s.addFormCont}>
+            <TextField
+                id="standard-basic"
+                label="Standard"
+                variant="standard"
+                onKeyPress={onKeyPressHandler}
+                value={title}
+                onChange={onChangeInputHandler}
+                className={error ? s.error : ''}/>
+            {/*<input onKeyPress={onKeyPressHandler}*/}
+            {/*       value={title}*/}
+            {/*       onChange={onChangeInputHandler}*/}
+            {/*       className={error ? s.error : ''}*/}
+            {/*/>*/}
+            <button onClick={onClickAddTaskButtonHandler}>+</button>
+            {error && <div className={s.errorMessage}>{error}</div>}
         </div>
     );
 };

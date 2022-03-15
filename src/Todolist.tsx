@@ -1,7 +1,9 @@
 import React, {ChangeEvent} from 'react';
 import {FilterValuesType} from './App';
-import classes from './Todolist.module.css'
+import s from './Todolist.module.css'
 import {AddItemForm} from './AddItemForm';
+import DeleteIcon from '@mui/icons-material/Delete';
+import {Button} from '@mui/material';
 
 export type ObjectType = {
     id: string,
@@ -27,7 +29,7 @@ export const Todolist = (props: TodolistPropsType) => {
         props.changeFilter(value, todolistId)
 
     }
-    const onClickRemoveTasksButtonHandler = (iId: string, todolistId:string) => {
+    const onClickRemoveTasksButtonHandler = (iId: string, todolistId: string) => {
         props.removeTask(iId, todolistId)
     }
 
@@ -35,50 +37,52 @@ export const Todolist = (props: TodolistPropsType) => {
         props.removeTodolist(props.id)
     }
 
-    const addTask = (title: string)=>{
+    const addTask = (title: string) => {
         props.addTask(title, props.id)
     }
 
 
     return (
-        <div>
+        <div className={s.containerMain}>
+            <div className={s.container}>
+                <h1>TODO List
+                    <span>{props.title}</span>
+                    <button onClick={onClickRemoveTodolistHandler}>x</button>
+                </h1>
 
-            <h3>{props.title}
-                <button onClick={onClickRemoveTodolistHandler}>x</button>
-            </h3>
-            <AddItemForm addItem={addTask}/>
-            <ul>
-                {
-                    props.tasks.map((i) => {
-
+                <div>
+                    {props.tasks.map((i) => {
                         const changeStatusHandler = (event: ChangeEvent<HTMLInputElement>) => {
                             props.ChangeStatus(i.id, event.currentTarget.checked, props.id)
                         }
                         return (
-                            <li key={i.id}
-                                className={i.isDone ? classes.isDone : ''}>
-                                <button onClick={() => onClickRemoveTasksButtonHandler(i.id, props.id)}>✘</button>
-                                <input type="checkbox"
-                                       checked={i.isDone}
-                                       onChange={changeStatusHandler}
-                                />
-                                <span>{i.title}</span>
-                            </li>
+                            <div key={i.id}
+                                 className={i.isDone ? s.isDone : ''}>
+                                <span className={s.title}>
+                                    {i.title}
+                                    <input type="checkbox"
+                                           checked={i.isDone}
+                                           onChange={changeStatusHandler}/>
+
+                                    <DeleteIcon onClick={() => onClickRemoveTasksButtonHandler(i.id, props.id)} className={s.del_btn}/></span>
+                            </div>
                         )
                     })
-                }
-            </ul>
+                    }
+                </div>
 
-            <div>
-                <button className={props.filter === 'all' ? classes.activeFilter : ''}
+            </div>
+            <AddItemForm addItem={addTask}/>
+            <div className={s.btn_block}>
+                <Button size={'small'} disableElevation variant="contained" className={props.filter === 'all' ? s.btnActive : s.btn}
                         onClick={() => onClickChangeFilterHandler('all', props.id)}>All
-                </button>
-                <button className={props.filter === 'active' ? classes.activeFilter : ''}
+                </Button>
+                <Button size={'small'} variant="contained" className={props.filter === 'active' ? s.btnActive : s.btn}
                         onClick={() => onClickChangeFilterHandler('active', props.id)}>Active
-                </button>
-                <button className={props.filter === 'completed' ? classes.activeFilter : ''}
+                </Button>
+                <Button size={'small'} variant="contained" className={props.filter === 'completed' ? s.btnActive : s.btn}
                         onClick={() => onClickChangeFilterHandler('completed', props.id)}>Completed
-                </button>
+                </Button>
             </div>
         </div>
     );
