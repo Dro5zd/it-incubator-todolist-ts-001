@@ -23,6 +23,7 @@ type TodolistPropsType = {
     changeFilter: (filter: FilterValuesType, todolistId: string) => void
     filter: FilterValuesType
     removeTodolist: (id: string) => void
+    onChangeTitleHandler: (newValue: string) => void
 }
 
 export const Todolist = (props: TodolistPropsType) => {
@@ -41,21 +42,26 @@ export const Todolist = (props: TodolistPropsType) => {
         props.addTask(title, props.id)
     }
 
+
+
     return (
         <div>
-            <span >{props.title}</span>
+            <span>{props.title}</span>
             <ClearIcon onClick={onClickRemoveTodolistHandler}/>
             <div>
                 {props.tasks.map((i) => {
-                    const changeStatusHandler = (event: ChangeEvent<HTMLInputElement>) => {
+                    const onChangeStatusHandler = (event: ChangeEvent<HTMLInputElement>) => {
                         props.ChangeStatus(i.id, event.currentTarget.checked, props.id)
+                    }
+                    const onChangeTitleHandler = (newValue: string) => {
+
                     }
                     return (
                         <div key={i.id} className={s.spanContainer}>
                             <Checkbox checked={i.isDone}
-                                      onChange={changeStatusHandler}/>
+                                      onChange={onChangeStatusHandler}/>
                             <DeleteIcon onClick={() => onClickRemoveTasksButtonHandler(i.id, props.id)}/>
-                            <EditableSpan title={i.title}/>
+                            <EditableSpan title={i.title} onChange={onChangeTitleHandler}/>
                         </div>
                     )
                 })
@@ -75,6 +81,6 @@ export const Todolist = (props: TodolistPropsType) => {
             </ButtonGroup>
             <AddItemForm addItem={addTask}/>
         </div>
-)
-    ;
+    )
+        ;
 };
