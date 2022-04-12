@@ -4,6 +4,8 @@ import {AddItemForm} from './AddItemForm';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ClearIcon from '@mui/icons-material/Clear';
 import {Button, ButtonGroup, Checkbox} from '@mui/material';
+import {EditableSpan} from './EditableSpan';
+import s from './Todolist.module.css'
 
 export type ObjectType = {
     id: string,
@@ -41,22 +43,19 @@ export const Todolist = (props: TodolistPropsType) => {
 
     return (
         <div>
-            <span >{props.title}---</span>
+            <span >{props.title}</span>
             <ClearIcon onClick={onClickRemoveTodolistHandler}/>
-
             <div>
                 {props.tasks.map((i) => {
                     const changeStatusHandler = (event: ChangeEvent<HTMLInputElement>) => {
                         props.ChangeStatus(i.id, event.currentTarget.checked, props.id)
                     }
                     return (
-                        <div key={i.id}>
+                        <div key={i.id} className={s.spanContainer}>
                             <Checkbox checked={i.isDone}
                                       onChange={changeStatusHandler}/>
-                            <span>
-                                    {i.title}
-                                <DeleteIcon onClick={() => onClickRemoveTasksButtonHandler(i.id, props.id)}
-                                            /></span>
+                            <DeleteIcon onClick={() => onClickRemoveTasksButtonHandler(i.id, props.id)}/>
+                            <EditableSpan title={i.title}/>
                         </div>
                     )
                 })
@@ -76,8 +75,6 @@ export const Todolist = (props: TodolistPropsType) => {
             </ButtonGroup>
             <AddItemForm addItem={addTask}/>
         </div>
-
-
 )
     ;
 };
