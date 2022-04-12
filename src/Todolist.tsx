@@ -41,7 +41,7 @@ export const Todolist = (props: TodolistPropsType) => {
 
     return (
         <div>
-            <span>{props.title}</span>
+            <span >{props.title}---</span>
             <ClearIcon onClick={onClickRemoveTodolistHandler}/>
 
             <div>
