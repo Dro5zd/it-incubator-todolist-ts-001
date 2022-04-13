@@ -23,7 +23,7 @@ type TodolistPropsType = {
     changeFilter: (filter: FilterValuesType, todolistId: string) => void
     filter: FilterValuesType
     removeTodolist: (id: string) => void
-    onChangeTitleHandler: (newValue: string) => void
+    onChangeTitleHandler: (id: string, newTitle: string, todolistId: string) => void
 }
 
 export const Todolist = (props: TodolistPropsType) => {
@@ -43,7 +43,6 @@ export const Todolist = (props: TodolistPropsType) => {
     }
 
 
-
     return (
         <div>
             <span>{props.title}</span>
@@ -53,8 +52,8 @@ export const Todolist = (props: TodolistPropsType) => {
                     const onChangeStatusHandler = (event: ChangeEvent<HTMLInputElement>) => {
                         props.ChangeStatus(i.id, event.currentTarget.checked, props.id)
                     }
-                    const onChangeTitleHandler = (newValue: string) => {
-
+                    const onChangeTitleHandler = (newTitle: string) => {
+                        props.onChangeTitleHandler(i.id, newTitle, props.id)
                     }
                     return (
                         <div key={i.id} className={s.spanContainer}>
