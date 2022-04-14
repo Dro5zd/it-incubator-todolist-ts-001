@@ -95,14 +95,13 @@ function App() {
     }
 
     const ChangeStatus = (id: string, isDone: boolean, todolistId: string) => {
-        // setTasks(tasks.map(i => i.id === id ? {...i, isDone} : i))
         // let todolistTasks = tasksObj[todolistId]
         // let task = todolistTasks.find(t => t.id === id)
         // if (task) {
         //     task.isDone = isDone
         //     setTasks({...tasksObj})
         // }
-        setTasks({...tasksObj, [todolistId]:tasksObj[todolistId].map(t => t.id === id ? {...t, isDone} : t )})
+        setTasks({...tasksObj, [todolistId]: tasksObj[todolistId].map(t => t.id === id ? {...t, isDone} : t)})
     }
 
     const onChangeTitleHandler = (id: string, newTitle: string, todolistId: string) => {
@@ -112,6 +111,16 @@ function App() {
             task.title = newTitle
             setTasks({...tasksObj})
         }
+    }
+
+    const onChangeTodolistTitleHandler = (newTitle: string, todolistId: string) => {
+        let title = todolists.find(t => t.id === todolistId)
+        if (title) {
+            title.title = newTitle
+            setTodolists([...todolists])
+        }
+
+        // setTodolists([...todolists, todolists.map(t => t.id === todolistId ? {...t, title = newTitle} : t)])
     }
 
 
@@ -160,8 +169,8 @@ function App() {
                                     addTask={addTask}
                                     ChangeStatus={ChangeStatus}
                                     filter={tl.filter}
-                                    removeTodolist={removeTodolist}
-                                    onChangeTitleHandler={onChangeTitleHandler}
+                                    removeTodolist={removeTodolist} onChangeTitleHandler={onChangeTitleHandler}
+                                    onChangeTodolistTitleHandler={onChangeTodolistTitleHandler}
                                 /></Paper>
                         </Grid>
                     })
