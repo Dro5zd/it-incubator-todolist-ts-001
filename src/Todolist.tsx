@@ -46,7 +46,6 @@ export const Todolist = (props: TodolistPropsType) => {
         props.onChangeTodolistTitleHandler(newTitle, props.id)
     }
 
-
     return (
         <div>
             <EditableSpan title={props.title} onChange={onChangeTaskTitleHandler}/>
