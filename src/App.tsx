@@ -112,7 +112,7 @@ function App() {
         //     setTasks({...tasksObj})
         // }
 
-        setTasks({...tasksObj, [todolistId]: tasksObj[todolistId].map(t => t.id === id ? {...t, title:newTitle} : t)})
+        setTasks({...tasksObj, [todolistId]: tasksObj[todolistId].map(t => t.id === id ? {...t, title: newTitle} : t)})
     }
 
     const onChangeTodolistTitleHandler = (newTitle: string, todolistId: string) => {
