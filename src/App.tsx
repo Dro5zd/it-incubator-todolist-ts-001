@@ -105,22 +105,24 @@ function App() {
     }
 
     const onChangeTitleHandler = (id: string, newTitle: string, todolistId: string) => {
-        let todolistTasks = tasksObj[todolistId]
-        let task = todolistTasks.find(t => t.id === id)
-        if (task) {
-            task.title = newTitle
-            setTasks({...tasksObj})
-        }
+        // let todolistTasks = tasksObj[todolistId]
+        // let task = todolistTasks.find(t => t.id === id)
+        // if (task) {
+        //     task.title = newTitle
+        //     setTasks({...tasksObj})
+        // }
+
+        setTasks({...tasksObj, [todolistId]: tasksObj[todolistId].map(t => t.id === id ? {...t, title:newTitle} : t)})
     }
 
     const onChangeTodolistTitleHandler = (newTitle: string, todolistId: string) => {
-        let title = todolists.find(t => t.id === todolistId)
-        if (title) {
-            title.title = newTitle
-            setTodolists([...todolists])
-        }
+        // let title = todolists.find(t => t.id === todolistId)
+        // if (title) {
+        //     title.title = newTitle
+        //     setTodolists([...todolists])
+        // }
 
-        // setTodolists([...todolists, todolists.map(t => t.id === todolistId ? {...t, title = newTitle} : t)])
+        setTodolists(todolists.map(t => t.id === todolistId ? {...t, title: newTitle} : t))
     }
 
 
