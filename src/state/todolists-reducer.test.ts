@@ -69,7 +69,7 @@ test('correct filter of todolist should be changed', () => {
         {id: todolistId2, title: 'What to buy', filter: 'all'}
     ]
 
-    const endState = todolistsReducer(startState, ChangeTodolistFilterAC(newFilter, todolistId2,));
+    const endState = todolistsReducer(startState, ChangeTodolistFilterAC(newFilter, todolistId2));
 
     expect(endState[0].filter).toBe('all');
     expect(endState[1].filter).toBe(newFilter);
