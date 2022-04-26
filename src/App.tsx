@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {ObjectType, Todolist} from './Todolist';
+import {ObjectType, Todolist} from './components/Todolist';
 import {v1} from 'uuid';
-import {AddItemForm} from './AddItemForm';
+import {AddItemForm} from './components/AddItemForm';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';

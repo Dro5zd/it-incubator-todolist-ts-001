@@ -1,5 +1,5 @@
 import React, {ChangeEvent} from 'react';
-import {FilterValuesType} from './App';
+import {FilterValuesType} from '../App';
 import {AddItemForm} from './AddItemForm';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ClearIcon from '@mui/icons-material/Clear';
