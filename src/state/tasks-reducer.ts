@@ -59,7 +59,8 @@ export const tasksReducer = (state: TasksStateType, action: ActionType): TasksSt
                 } : t)
             }
         case 'ADD-TODOLIST':
-            return {...state, [action.todolistId]: []}
+            debugger
+            return {[action.todolistId]: [], ...state}
 
         case 'REMOVE-TODOLIST':
             const stateCopy = {...state}
