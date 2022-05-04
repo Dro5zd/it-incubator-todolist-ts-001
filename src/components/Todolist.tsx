@@ -47,7 +47,6 @@ export const Todolist = (props: TodolistPropsType) => {
     }
 
     return (
-
         <div>
             <EditableSpan title={props.title} onChange={onChangeTaskTitleHandler}/>
             <ClearIcon onClick={onClickRemoveTodolistHandler}/>
