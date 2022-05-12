@@ -1,14 +1,12 @@
-import React, {ChangeEvent, memo, useCallback} from 'react';
-import {FilterValuesType} from '../App';
+import React, {memo, useCallback} from 'react';
+import {FilterValuesType} from '../AppWithRedux';
 import {AddItemForm} from './AddItemForm';
-import DeleteIcon from '@mui/icons-material/Delete';
 import ClearIcon from '@mui/icons-material/Clear';
-import {Button, ButtonGroup, Checkbox} from '@mui/material';
+import {Button, ButtonGroup} from '@mui/material';
 import {EditableSpan} from './EditableSpan';
-import s from './Todolist.module.css'
-import Task from './Task';
+import {Task} from './Task';
 
-export type ObjectType = {
+export type TaskType = {
     id: string,
     title: string,
     isDone: boolean
@@ -17,7 +15,7 @@ export type ObjectType = {
 type TodolistPropsType = {
     id: string
     title: string,
-    tasks: ObjectType[]
+    tasks: TaskType[]
     removeTask: (id: string, todolistId: string) => void
     addTask: (title: string, todolistId: string) => void
     ChangeStatus: (taskId: string, isDone: boolean, todolistId: string) => void
@@ -46,18 +44,31 @@ export const Todolist = memo((props: TodolistPropsType) => {
 
     const onChangeTaskTitleHandler = useCallback((newTitle: string) => {
         props.onChangeTodolistTitleHandler(newTitle, props.id)
-    }, [])
+    }, [props.onChangeTodolistTitleHandler , props.id])
+
+    let tasksForTodolist = props.tasks
+
+    if (props.filter === 'active') {
+        tasksForTodolist = props.tasks.filter(t => !t.isDone);
+    }
+    if (props.filter === 'completed') {
+        tasksForTodolist = props.tasks.filter(t => t.isDone);
+    }
 
     return (
         <div>
             <EditableSpan title={props.title} onChange={onChangeTaskTitleHandler}/>
             <ClearIcon onClick={onClickRemoveTodolistHandler}/>
-            <Task id={props.id}
-                  tasks={props.tasks}
-                  filter={props.filter}
-                  ChangeStatus={props.ChangeStatus}
-                  removeTask={props.removeTask}
-                  onChangeTitleHandler={props.onChangeTitleHandler}/>
+
+            {tasksForTodolist.map(t => <Task
+                key={t.id}
+                todolistId={props.id}
+                tasks={t}
+                ChangeStatus={props.ChangeStatus}
+                removeTask={props.removeTask}
+                onChangeTitleHandler={props.onChangeTitleHandler}/>)
+            }
+
             <ButtonGroup size="large" aria-label="large button group" disableElevation variant="outlined"
                          color={'inherit'}>
                 <Button variant={props.filter === 'all' ? 'contained' : 'outlined'}

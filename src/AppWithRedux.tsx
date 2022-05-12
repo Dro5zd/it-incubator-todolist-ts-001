@@ -14,10 +14,16 @@ import {
     changeTodolistTitleAC,
     removeTodolistAC,
 } from './state/todolists-reducer';
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from './state/tasks-reducer';
+import {
+    addTaskAC,
+    changeTaskStatusAC,
+    changeTaskTitleAC,
+    removeTaskAC,
+    TasksStateType,
+    TodolistType
+} from './state/tasks-reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from './state/store';
-import {TasksStateType, TodolistType} from './App';
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 
@@ -45,7 +51,7 @@ export function AppWithRedux() {
 
     const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistAC(title))
-    }, [dispatch])
+    }, [])
 
     const removeTodolist = useCallback((id: string) => {
         dispatch(removeTodolistAC(id))

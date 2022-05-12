@@ -2,11 +2,10 @@ import React, {ChangeEvent, memo, useState} from 'react';
 
 export type EditableSpanPropsType = {
     title: string
-    onChange: (newTitle: string)=>void
+    onChange: (newTitle: string) => void
 }
 
 export const EditableSpan = memo((props: EditableSpanPropsType) => {
-
     console.log('ESRender')
 
     const [editMode, setEditMode] = useState(false)
