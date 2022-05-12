@@ -6,6 +6,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import {Button, ButtonGroup, Checkbox} from '@mui/material';
 import {EditableSpan} from './EditableSpan';
 import s from './Todolist.module.css'
+import Task from './Task';
 
 export type ObjectType = {
     id: string,
@@ -35,9 +36,7 @@ export const Todolist = memo((props: TodolistPropsType) => {
     const onActiveClickHandler = useCallback(() => props.changeFilter('active', props.id), [props.changeFilter, props.id])
     const onCompletedClickHandler = useCallback(() => props.changeFilter('completed', props.id), [props.changeFilter, props.id])
 
-    const onClickRemoveTasksButtonHandler = (iId: string, todolistId: string) => {
-        props.removeTask(iId, todolistId)
-    }
+
     const onClickRemoveTodolistHandler = () => {
         props.removeTodolist(props.id)
     }
@@ -45,43 +44,20 @@ export const Todolist = memo((props: TodolistPropsType) => {
         props.addTask(title, props.id)
     }, [props.addTask, props.id])
 
-    const onChangeTaskTitleHandler = (newTitle: string) => {
+    const onChangeTaskTitleHandler = useCallback((newTitle: string) => {
         props.onChangeTodolistTitleHandler(newTitle, props.id)
-    }
-
-    let tasksForTodolist = props.tasks
-
-    if (props.filter === 'active') {
-        tasksForTodolist = props.tasks.filter(t => !t.isDone);
-    }
-    if (props.filter === 'completed') {
-        tasksForTodolist = props.tasks.filter(t => t.isDone);
-    }
+    }, [])
 
     return (
         <div>
-
             <EditableSpan title={props.title} onChange={onChangeTaskTitleHandler}/>
             <ClearIcon onClick={onClickRemoveTodolistHandler}/>
-            <div>
-                {tasksForTodolist.map((i) => {
-                    const onChangeStatusHandler = (event: ChangeEvent<HTMLInputElement>) => {
-                        props.ChangeStatus(i.id, event.currentTarget.checked, props.id)
-                    }
-                    const onChangeTitleHandler = (newTitle: string) => {
-                        props.onChangeTitleHandler(i.id, newTitle, props.id)
-                    }
-                    return (
-                        <div key={i.id} className={s.spanContainer}>
-                            <Checkbox checked={i.isDone}
-                                      onChange={onChangeStatusHandler}/>
-                            <DeleteIcon onClick={() => onClickRemoveTasksButtonHandler(i.id, props.id)}/>
-                            <EditableSpan title={i.title} onChange={onChangeTitleHandler}/>
-                        </div>
-                    )
-                })
-                }
-            </div>
+            <Task id={props.id}
+                  tasks={props.tasks}
+                  filter={props.filter}
+                  ChangeStatus={props.ChangeStatus}
+                  removeTask={props.removeTask}
+                  onChangeTitleHandler={props.onChangeTitleHandler}/>
             <ButtonGroup size="large" aria-label="large button group" disableElevation variant="outlined"
                          color={'inherit'}>
                 <Button variant={props.filter === 'all' ? 'contained' : 'outlined'}

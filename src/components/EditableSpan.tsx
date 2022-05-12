@@ -1,11 +1,13 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, memo, useState} from 'react';
 
 export type EditableSpanPropsType = {
     title: string
     onChange: (newTitle: string)=>void
 }
 
-export const EditableSpan = (props: EditableSpanPropsType) => {
+export const EditableSpan = memo((props: EditableSpanPropsType) => {
+
+    console.log('ESRender')
 
     const [editMode, setEditMode] = useState(false)
     const [title, setTitle] = useState('')
@@ -27,4 +29,4 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
         ? <input onChange={ChangeTitleHandler} value={title} autoFocus onBlur={activateViewMode}/>
         : <span onDoubleClick={activateEditMode}>{props.title}</span>
         ;
-};
+});
