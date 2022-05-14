@@ -1,24 +1,14 @@
 import React, {useEffect, useState} from 'react'
-import axios from 'axios';
+import {todolistAPI} from '../api/todolists-api';
 
 export default {
     title: 'API'
 }
 
-const settings = {
-    withCredentials: true,
-    headers: {
-        'API-KEY': '398fd428-4e41-4ce9-836c-118b8fdb8983'
-    }
-}
-
 export const GetTodolists = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        // здесь мы будем делать запрос и ответ закидывать в стейт.
-        // который в виде строки будем отображать в div-ке
-        axios.get('https://social-network.samuraijs.com/api/1.1/todo-lists', settings)
-
+        todolistAPI.getTodolists()
             .then((res) => {
 
                 setState(res.data)
@@ -30,10 +20,9 @@ export const GetTodolists = () => {
 export const CreateTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        axios.post('https://social-network.samuraijs.com/api/1.1/todo-lists', {title: '12345 Todolist'}, settings)
 
+        todolistAPI.createTodolist('12345 Todolist')
             .then((res) => {
-                debugger
                 setState(res.data)
             })
 
@@ -44,11 +33,10 @@ export const CreateTodolist = () => {
 export const DeleteTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-
-        axios.delete('https://social-network.samuraijs.com/api/1.1/todo-lists/a1a5a346-b104-42b4-b9bb-76ab8e7b244c', settings)
+        const todolistId = 'a5da2db1-6dcf-4ec5-b7c6-eff42b408a8f'
+        todolistAPI.deleteTodolist(todolistId)
 
             .then((res) => {
-                debugger
                 setState(res.data)
             })
     }, [])
@@ -58,11 +46,10 @@ export const DeleteTodolist = () => {
 export const UpdateTodolistTitle = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-
-        axios.put('https://social-network.samuraijs.com/api/1.1/todo-lists/a5da2db1-6dcf-4ec5-b7c6-eff42b408a8f', {title: 'yoyo'}, settings)
+        const todolistId = '318aa2bc-8e27-4f1f-a9da-588f19387ec4'
+        todolistAPI.updateTodolist(todolistId, 'yoyo')
 
             .then((res) => {
-                debugger
                 setState(res.data)
             })
 
