@@ -1,14 +1,6 @@
 import {v1} from 'uuid';
 import {AddTodolistACType, RemoveTodolistACType} from './todolists-reducer';
-import {TaskType} from '../components/Todolist';
-import {FilterValuesType} from '../AppWithRedux';
-
-
-export type TodolistType = {
-    id: string
-    title: string
-    filter: FilterValuesType
-}
+import {TaskPriorities, TaskStatuses, TaskType} from '../api/todolists-api';
 
 export type TasksStateType = {
     [key: string]: TaskType[]
@@ -54,7 +46,18 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
         case 'ADD-TASK':
             return {
                 ...state,
-                [action.todolistId]: [{id: v1(), title: action.title, isDone: false}, ...state[action.todolistId]]
+                [action.todolistId]: [{
+                    id: v1(),
+                    title: action.title,
+                    status: TaskStatuses.Completed,
+                    description: '',
+                    priority: TaskPriorities.Low,
+                    startDate: '',
+                    deadline: '',
+                    todoListId: action.todolistId,
+                    order: 0,
+                    addedDate: ''
+                }, ...state[action.todolistId]]
             }
         case 'CHANGE-TASK-STATUS':
             return {

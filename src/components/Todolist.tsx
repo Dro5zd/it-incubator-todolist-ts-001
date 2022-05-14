@@ -1,16 +1,11 @@
 import React, {memo, useCallback} from 'react';
-import {FilterValuesType} from '../AppWithRedux';
 import {AddItemForm} from './AddItemForm';
 import ClearIcon from '@mui/icons-material/Clear';
 import {Button, ButtonGroup} from '@mui/material';
 import {EditableSpan} from './EditableSpan';
 import {Task} from './Task';
-
-export type TaskType = {
-    id: string,
-    title: string,
-    isDone: boolean
-}
+import {FilterValuesType} from '../state/todolists-reducer';
+import {TaskType} from '../api/todolists-api';
 
 type TodolistPropsType = {
     id: string
