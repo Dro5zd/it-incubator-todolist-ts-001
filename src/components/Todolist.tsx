@@ -5,7 +5,7 @@ import {Button, ButtonGroup} from '@mui/material';
 import {EditableSpan} from './EditableSpan';
 import {Task} from './Task';
 import {FilterValuesType} from '../state/todolists-reducer';
-import {TaskType} from '../api/todolists-api';
+import {TaskStatuses, TaskType} from '../api/todolists-api';
 
 type TodolistPropsType = {
     id: string
@@ -13,7 +13,7 @@ type TodolistPropsType = {
     tasks: TaskType[]
     removeTask: (id: string, todolistId: string) => void
     addTask: (title: string, todolistId: string) => void
-    ChangeStatus: (taskId: string, isDone: boolean, todolistId: string) => void
+    ChangeStatus: (taskId: string, status: TaskStatuses, todolistId: string) => void
     changeFilter: (filter: FilterValuesType, todolistId: string) => void
     filter: FilterValuesType
     removeTodolist: (id: string) => void
@@ -44,10 +44,10 @@ export const Todolist = memo((props: TodolistPropsType) => {
     let tasksForTodolist = props.tasks
 
     if (props.filter === 'active') {
-        tasksForTodolist = props.tasks.filter(t => !t.isDone);
+        tasksForTodolist = props.tasks.filter(t => t.status === TaskStatuses.New);
     }
     if (props.filter === 'completed') {
-        tasksForTodolist = props.tasks.filter(t => t.isDone);
+        tasksForTodolist = props.tasks.filter(t => t.status === TaskStatuses.Completed);
     }
 
     return (

@@ -19,7 +19,7 @@ export type AddTaskACType = {
 export type ChangeTaskStatusACType = {
     type: 'CHANGE-TASK-STATUS'
     taskId: string
-    isDone: boolean
+    status: TaskStatuses
     todolistId: string
 }
 export type ChangeTaskTitleACType = {
@@ -49,7 +49,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
                 [action.todolistId]: [{
                     id: v1(),
                     title: action.title,
-                    status: TaskStatuses.Completed,
+                    status: TaskStatuses.New,
                     description: '',
                     priority: TaskPriorities.Low,
                     startDate: '',
@@ -64,7 +64,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
                 ...state,
                 [action.todolistId]: state[action.todolistId].map(t => t.id === action.taskId ? {
                     ...t,
-                    isDone: action.isDone
+                    status: action.status
                 } : t)
             }
         case 'CHANGE-TASK-TITLE':
@@ -95,8 +95,8 @@ export const removeTaskAC = (taskId: string, todolistId: string) => {
 export const addTaskAC = (title: string, todolistId: string) => {
     return {type: 'ADD-TASK' as const, title, todolistId}
 }
-export const changeTaskStatusAC = (taskId: string, isDone: boolean, todolistId: string) => {
-    return {type: 'CHANGE-TASK-STATUS' as const, taskId, isDone, todolistId}
+export const changeTaskStatusAC = (taskId: string, status: TaskStatuses, todolistId: string) => {
+    return {type: 'CHANGE-TASK-STATUS' as const, taskId, status, todolistId}
 }
 export const changeTaskTitleAC = (taskId: string, title: string, todolistId: string) => {
     return {type: 'CHANGE-TASK-TITLE' as const, taskId, title, todolistId}
