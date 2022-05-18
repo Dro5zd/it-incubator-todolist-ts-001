@@ -1,6 +1,6 @@
 import {v1} from 'uuid';
 import {AddTodolistACType, RemoveTodolistACType} from './todolists-reducer';
-import {TaskPriorities, TaskStatuses, TaskType} from '../api/todolists-api';
+import {TaskPriorities, TaskStatuses, TaskType, TodolistType} from '../api/todolists-api';
 
 export type TasksStateType = {
     [key: string]: TaskType[]
@@ -29,6 +29,8 @@ export type ChangeTaskTitleACType = {
     todolistId: string
 }
 
+export type setTodolistsACType = ReturnType<typeof setTodolistsAC>
+
 type ActionType =
     RemoveTaskACType
     | AddTaskACType
@@ -36,6 +38,7 @@ type ActionType =
     | ChangeTaskTitleACType
     | AddTodolistACType
     | RemoveTodolistACType
+    | setTodolistsACType
 
 const initialState: TasksStateType = {}
 
@@ -77,9 +80,18 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             }
         case 'ADD-TODOLIST':
             return {[action.todolistId]: [], ...state}
-        case 'REMOVE-TODOLIST':
+
+        case 'REMOVE-TODOLIST':{
             const stateCopy = {...state}
             delete stateCopy[action.id]
+            return stateCopy
+        }
+
+        case 'SET-TODOLISTS':
+            const stateCopy = {...state}
+            action.todolists.forEach(tl => {
+                stateCopy[tl.id] = []
+            })
             return stateCopy
 
         default:
@@ -87,7 +99,6 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
     }
 };
 
-// export type RemoveTaskACType = ReturnType<typeof RemoveTaskAC>
 
 export const removeTaskAC = (taskId: string, todolistId: string) => {
     return {type: 'REMOVE-TASK' as const, taskId, todolistId};
@@ -101,3 +112,7 @@ export const changeTaskStatusAC = (taskId: string, status: TaskStatuses, todolis
 export const changeTaskTitleAC = (taskId: string, title: string, todolistId: string) => {
     return {type: 'CHANGE-TASK-TITLE' as const, taskId, title, todolistId}
 }
+export const setTodolistsAC = (todolists: TodolistType[]) => {
+    return {type: 'SET-TODOLISTS' as const, todolists}
+}
+
