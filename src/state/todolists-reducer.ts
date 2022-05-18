@@ -40,7 +40,6 @@ type ActionType =
     | ChangeTodolistTitleACType
     | ChangeTodolistFilterACType
     | SetTodolistsACType
-    | fetchTodolistsThunkTCType
 
 
 const initialState: Array<TodolistDomainType> = []

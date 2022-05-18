@@ -1,4 +1,4 @@
-import React, {memo, useCallback} from 'react';
+import React, {memo, useCallback, useEffect} from 'react';
 import {AddItemForm} from './AddItemForm';
 import ClearIcon from '@mui/icons-material/Clear';
 import {Button, ButtonGroup} from '@mui/material';
@@ -6,6 +6,8 @@ import {EditableSpan} from './EditableSpan';
 import {Task} from './Task';
 import {FilterValuesType} from '../state/todolists-reducer';
 import {TaskStatuses, TaskType} from '../api/todolists-api';
+import {fetchTasksTC} from '../state/tasks-reducer';
+import {useTypedDispatch} from '../state/store';
 
 type TodolistPropsType = {
     id: string
@@ -23,7 +25,10 @@ type TodolistPropsType = {
 
 export const Todolist = memo((props: TodolistPropsType) => {
 
-    console.log('Todolist called')
+    const dispatch = useTypedDispatch()
+    useEffect(() => {
+        dispatch(fetchTasksTC(props.id))
+    }, [])
 
     const onAllClickHandler = useCallback(() => props.changeFilter('all', props.id), [props.changeFilter, props.id])
     const onActiveClickHandler = useCallback(() => props.changeFilter('active', props.id), [props.changeFilter, props.id])
@@ -39,7 +44,7 @@ export const Todolist = memo((props: TodolistPropsType) => {
 
     const onChangeTaskTitleHandler = useCallback((newTitle: string) => {
         props.onChangeTodolistTitleHandler(newTitle, props.id)
-    }, [props.onChangeTodolistTitleHandler , props.id])
+    }, [props.onChangeTodolistTitleHandler, props.id])
 
     let tasksForTodolist = props.tasks
 
