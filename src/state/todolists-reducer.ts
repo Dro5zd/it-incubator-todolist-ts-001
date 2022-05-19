@@ -113,3 +113,13 @@ export const addTodolistTC = (title: string) => {
 
     }
 }
+
+export const removeTodolistTC = (id: string) => {
+    return (dispatch: Dispatch) => {
+        todolistAPI.deleteTodolist(id)
+            .then(res => {
+                dispatch(removeTodolistAC(id))
+            })
+
+    }
+}

@@ -13,7 +13,7 @@ import {
     changeTodolistFilterAC,
     changeTodolistTitleAC, fetchTodolistsTC,
     FilterValuesType,
-    removeTodolistAC, TodolistDomainType,
+    removeTodolistAC, removeTodolistTC, TodolistDomainType,
 } from './state/todolists-reducer';
 import {
     addTaskTC,
@@ -57,7 +57,7 @@ export function App() {
     }, [])
 
     const removeTodolist = useCallback((id: string) => {
-        dispatch(removeTodolistAC(id))
+        dispatch(removeTodolistTC(id))
     }, [])
 
     const changeFilter = useCallback((value: FilterValuesType, todolistId: string) => {
