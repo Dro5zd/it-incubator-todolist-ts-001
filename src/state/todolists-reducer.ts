@@ -1,7 +1,5 @@
 import {todolistAPI, TodolistType} from '../api/todolists-api';
 import {Dispatch} from 'redux';
-import {addTaskAC} from './tasks-reducer';
-
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 

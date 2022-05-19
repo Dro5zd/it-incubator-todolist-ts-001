@@ -1,5 +1,12 @@
 import {AddTodolistACType, RemoveTodolistACType} from './todolists-reducer';
-import {TaskStatuses, TaskType, todolistAPI, TodolistType, UpdateTaskModelType} from '../api/todolists-api';
+import {
+    TaskPriorities,
+    TaskStatuses,
+    TaskType,
+    todolistAPI,
+    TodolistType,
+    UpdateTaskModelType
+} from '../api/todolists-api';
 import {Dispatch} from 'redux';
 import {AppRootStateType} from './store';
 
@@ -16,18 +23,6 @@ export type AddTaskACType = {
     type: 'ADD-TASK'
     task: TaskType
 }
-export type ChangeTaskStatusACType = {
-    type: 'CHANGE-TASK-STATUS'
-    taskId: string
-    status: TaskStatuses
-    todolistId: string
-}
-export type ChangeTaskTitleACType = {
-    type: 'CHANGE-TASK-TITLE',
-    taskId: string
-    title: string
-    todolistId: string
-}
 
 export type SetTasksACType = {
     type: 'SET-TASKS',
@@ -35,17 +30,26 @@ export type SetTasksACType = {
     tasks: TaskType[]
 }
 
+export type UpdateDomainTaskModelType = {
+    description?: string
+    title?: string
+    status?: TaskStatuses
+    priority?: TaskPriorities
+    startDate?: string
+    deadline?: string
+}
+
 export type setTodolistsACType = ReturnType<typeof setTodolistsAC>
+export type updateTasksACType = ReturnType<typeof updateTaskAC>
 
 type ActionType =
     RemoveTaskACType
     | AddTaskACType
-    | ChangeTaskStatusACType
-    | ChangeTaskTitleACType
     | AddTodolistACType
     | RemoveTodolistACType
     | setTodolistsACType
     | SetTasksACType
+    | updateTasksACType
 
 const initialState: TasksStateType = {}
 
@@ -55,24 +59,14 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             return {...state, [action.todolistId]: state[action.todolistId].filter(t => t.id !== action.taskId)}
         case 'ADD-TASK': {
             return {...state, [action.task.todoListId]: [action.task, ...state[action.task.todoListId]]}
-
         }
-        case 'CHANGE-TASK-STATUS':
+        case 'UPDATE-TASK':
             return {
                 ...state,
-                [action.todolistId]: state[action.todolistId].map(t => t.id === action.taskId ? {
-                    ...t,
-                    status: action.status
-                } : t)
+                [action.todolistId]: state[action.todolistId].map(t => t.id === action.taskId
+                    ? {...t, ...action.model} : t)
             }
-        case 'CHANGE-TASK-TITLE':
-            return {
-                ...state,
-                [action.todolistId]: state[action.todolistId].map(t => t.id === action.taskId ? {
-                    ...t,
-                    title: action.title
-                } : t)
-            }
+
         case 'ADD-TODOLIST':
             return {[action.todolist.id]: [], ...state}
 
@@ -107,11 +101,8 @@ export const removeTaskAC = (taskId: string, todolistId: string) => {
 export const addTaskAC = (task: TaskType) => {
     return {type: 'ADD-TASK', task} as const
 }
-export const changeTaskStatusAC = (taskId: string, status: TaskStatuses, todolistId: string) => {
-    return {type: 'CHANGE-TASK-STATUS' as const, taskId, status, todolistId}
-}
-export const changeTaskTitleAC = (taskId: string, title: string, todolistId: string) => {
-    return {type: 'CHANGE-TASK-TITLE' as const, taskId, title, todolistId}
+export const updateTaskAC = (taskId: string,model: UpdateDomainTaskModelType, todolistId: string, ) => {
+    return {type: 'UPDATE-TASK' as const, taskId, model, todolistId }
 }
 export const setTodolistsAC = (todolists: TodolistType[]) => {
     return {type: 'SET-TODOLISTS' as const, todolists}
@@ -150,46 +141,32 @@ export const addTaskTC = (title: string, todolistId: string) => {
     }
 }
 
-export const changeTaskStatusTC = (taskId: string, status: TaskStatuses, todolistId: string) => {
+export const updateTaskTC = (taskId: string,domainModel: UpdateDomainTaskModelType, todolistId: string, ) => {
     return (dispatch: Dispatch, getState: () => AppRootStateType) => {
 
-        const allTasks = getState().tasks
-        const tasksForCurrentTodolist = allTasks[todolistId]
-        const task = tasksForCurrentTodolist.find(t => t.id === taskId)
-        if (task) {
-            todolistAPI.updateTask(todolistId, taskId, {
-                description: task.description,
-                title: task.title,
-                status: status,
-                priority: task.priority,
-                startDate: task.startDate,
-                deadline: task.deadline
-            })
+        const state = getState()
+        const task = state.tasks[todolistId].find(t => t.id === taskId)
+
+        if(!task){
+            console.warn('Error')
+            return
+        }
+
+        const apiModel: UpdateTaskModelType = {
+            description: task.description,
+            title: task.title,
+            status: task.status,
+            priority: task.priority,
+            startDate: task.startDate,
+            deadline: task.deadline,
+            ...domainModel
+        }
+
+            todolistAPI.updateTask(taskId, apiModel, todolistId )
                 .then(res => {
-                    dispatch(changeTaskStatusAC(taskId, status, todolistId))
+                    dispatch(updateTaskAC(taskId, domainModel, todolistId))
                 })
         }
     }
-}
 
-export const changeTaskTitleTC = (taskId: string, title: string, todolistId: string) => {
-    return (dispatch: Dispatch, getState: () => AppRootStateType) => {
 
-        const allTasks = getState().tasks
-        const tasksForCurrentTodolist = allTasks[todolistId]
-        const task = tasksForCurrentTodolist.find(t => t.id === taskId)
-        if (task) {
-            todolistAPI.updateTask(todolistId, taskId, {
-                description: task.description,
-                title: title,
-                status: task.status,
-                priority: task.priority,
-                startDate: task.startDate,
-                deadline: task.deadline
-            })
-                .then(res => {
-                    dispatch(changeTaskTitleAC(taskId, title, todolistId))
-                })
-        }
-    }
-}
