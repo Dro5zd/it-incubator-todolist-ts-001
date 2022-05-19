@@ -146,7 +146,21 @@ test('correct task should be deleted from correct array', () => {
 
 test('correct task should be added to correct array', () => {
 
-    const endState = tasksReducer(startState, addTaskAC('juice', 'todolistId2'))
+    const action = addTaskAC({
+        todoListId: 'todolistId2',
+        title: 'juice',
+        id: '1',
+        status: TaskStatuses.New,
+        description: '',
+        priority: TaskPriorities.Low,
+        startDate: '',
+        deadline: '',
+        order: 0,
+        addedDate: ''
+    })
+
+
+    const endState = tasksReducer(startState, action)
 
     expect(endState['todolistId1'].length).toBe(3);
     expect(endState['todolistId2'].length).toBe(4);
@@ -173,7 +187,12 @@ test('title of specified task should be changed', () => {
 
 test('new array should be added when new todolist is added', () => {
 
-    const endState = tasksReducer(startState, addTodolistAC('new todolist'))
+    const endState = tasksReducer(startState, addTodolistAC({
+        id: 'blabla',
+        title: 'string',
+        addedDate: 'string',
+        order: 0
+    }))
 
 
     const keys = Object.keys(endState);
