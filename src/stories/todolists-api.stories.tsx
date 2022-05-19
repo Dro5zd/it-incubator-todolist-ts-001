@@ -109,13 +109,13 @@ export const UpdateTask = () => {
     useEffect(() => {
         const todolistId = '318aa2bc-8e27-4f1f-a9da-588f19387ec4'
         const id = 'b6bf0ad3-3587-4d3b-a57c-c828eb69f04d'
-        todolistAPI.updateTask(todolistId, id, {
+        todolistAPI.updateTask(id, {
             description: 'string',
             title: 'stringNEW',
             status: 2,
             priority: 1,
             startDate: '13:22:21',
-            deadline: '12:22:22'})
+            deadline: '12:22:22'}, todolistId)
 
             .then((res) => {
                 setState(res.data)

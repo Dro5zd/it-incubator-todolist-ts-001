@@ -2,7 +2,6 @@ import React from 'react';
 import { action} from '@storybook/addon-actions';
 import {AddItemForm} from '../components/AddItemForm';
 
-
 export default {
     title: 'AddItemForm Component',
     component: AddItemForm,
