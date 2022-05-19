@@ -20,7 +20,7 @@ type TodolistPropsType = {
     filter: FilterValuesType
     removeTodolist: (id: string) => void
     onChangeTitleHandler: (id: string, newTitle: string, todolistId: string) => void
-    onChangeTodolistTitleHandler: (newTitle: string, todolistId: string) => void
+    onChangeTodolistTitleHandler: (todolistId: string, newTitle: string) => void
 }
 
 export const Todolist = memo((props: TodolistPropsType) => {
@@ -43,7 +43,7 @@ export const Todolist = memo((props: TodolistPropsType) => {
     }, [props.addTask, props.id])
 
     const onChangeTaskTitleHandler = useCallback((newTitle: string) => {
-        props.onChangeTodolistTitleHandler(newTitle, props.id)
+        props.onChangeTodolistTitleHandler(props.id, newTitle)
     }, [props.onChangeTodolistTitleHandler, props.id])
 
     let tasksForTodolist = props.tasks

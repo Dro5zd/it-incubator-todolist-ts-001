@@ -112,7 +112,6 @@ export const UpdateTask = () => {
         todolistAPI.updateTask(todolistId, id, {
             description: 'string',
             title: 'stringNEW',
-            completed: true,
             status: 2,
             priority: 1,
             startDate: '13:22:21',

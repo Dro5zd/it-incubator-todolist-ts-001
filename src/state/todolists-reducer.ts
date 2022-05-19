@@ -1,5 +1,6 @@
 import {todolistAPI, TodolistType} from '../api/todolists-api';
 import {Dispatch} from 'redux';
+import {addTaskAC} from './tasks-reducer';
 
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
@@ -83,8 +84,8 @@ export const addTodolistAC = (todolist: TodolistType): AddTodolistACType => {
     return {type: 'ADD-TODOLIST', todolist}
 }
 
-export const changeTodolistTitleAC = (title: string, todolistId: string): ChangeTodolistTitleACType => {
-    return {type: 'CHANGE-TODOLIST-TITLE', title: title, id: todolistId}
+export const changeTodolistTitleAC = (todolistId: string, title: string): ChangeTodolistTitleACType => {
+    return {type: 'CHANGE-TODOLIST-TITLE', id: todolistId, title: title}
 }
 
 export const changeTodolistFilterAC = (filter: FilterValuesType, todolistId: string): ChangeTodolistFilterACType => {
@@ -110,7 +111,6 @@ export const addTodolistTC = (title: string) => {
             .then(res => {
                 dispatch(addTodolistAC(res.data.data.item))
             })
-
     }
 }
 
@@ -120,6 +120,14 @@ export const removeTodolistTC = (id: string) => {
             .then(res => {
                 dispatch(removeTodolistAC(id))
             })
+    }
+}
 
+export const changeTodolistTitleTC = (id: string, title: string) => {
+    return (dispatch: Dispatch) => {
+        todolistAPI.updateTodolist(id, title)
+            .then(res => {
+                dispatch(changeTodolistTitleAC(id, title))
+            })
     }
 }
