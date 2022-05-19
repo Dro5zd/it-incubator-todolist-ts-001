@@ -96,7 +96,5 @@ export const todolistAPI = {
 
     deleteTask(todolistId: string, taskId: string,) {
         return instance.delete<ResponseType<{}>>(`todo-lists/${todolistId}/tasks/${taskId}`)
-    },
-
-
+    }
 }
