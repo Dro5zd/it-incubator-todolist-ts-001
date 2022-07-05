@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import {Container, Grid, Paper} from '@mui/material';
+import {Container, Grid, LinearProgress, Paper} from '@mui/material';
 import {
     addTodolistTC,
     changeTodolistFilterAC,
@@ -29,6 +29,7 @@ export function App() {
 
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
+    const status = useSelector<AppRootStateType>(state => state.app.status)
     const dispatch = useTypedDispatch()
 
     useEffect(() => {
@@ -85,6 +86,7 @@ export function App() {
                     </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
+                {status === 'loading' && <LinearProgress/>}
             </AppBar>
             <Container fixed>
                 <Grid container style={{padding: '20px'}}>
