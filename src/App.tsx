@@ -23,6 +23,7 @@ import {
 import {useSelector} from 'react-redux';
 import {AppRootStateType, useTypedDispatch} from './state/store';
 import {TaskStatuses} from './api/todolists-api';
+import {ErrorSnackbar} from './state/ErrorSnackbar';
 
 
 export function App() {
@@ -30,6 +31,7 @@ export function App() {
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const status = useSelector<AppRootStateType>(state => state.app.status)
+
     const dispatch = useTypedDispatch()
 
     useEffect(() => {
@@ -70,6 +72,7 @@ export function App() {
 
     return (
         <div className="App">
+            <ErrorSnackbar/>
             <AppBar position="static">
                 <Toolbar>
                     <IconButton

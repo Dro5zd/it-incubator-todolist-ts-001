@@ -38,7 +38,7 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
                 id="outlined-basic"
                 size={'small'}
                 color={'secondary'}
-                label="New task"
+                label="New something"
                 variant="outlined"
                 onKeyPress={onKeyPressHandler}
                 value={title}
