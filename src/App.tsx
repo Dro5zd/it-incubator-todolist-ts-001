@@ -32,6 +32,7 @@ export function App() {
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const status = useSelector<AppRootStateType>(state => state.app.status)
 
+
     const dispatch = useTypedDispatch()
 
     useEffect(() => {
@@ -93,7 +94,7 @@ export function App() {
             </AppBar>
             <Container fixed>
                 <Grid container style={{padding: '20px'}}>
-                    <AddItemForm addItem={addTodolist} disabled={true}/>
+                    <AddItemForm addItem={addTodolist} disabled={status === 'loading'}/>
                 </Grid>
                 <Grid container spacing={3}>
                     {todolists.map(tl => {

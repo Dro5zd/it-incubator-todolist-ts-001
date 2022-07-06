@@ -62,7 +62,7 @@ export const Todolist = memo((props: TodolistPropsType) => {
         <div>
             <EditableSpan title={props.title} onChange={onChangeTaskTitleHandler}/>
             <IconButton onClick={RemoveTodolist} disabled={props.entityStatus === 'loading'} style={{cursor: 'pointer'}}>
-                <DeleteIcon/>
+                <ClearIcon/>
                 </IconButton>
 
             {tasksForTodolist.map(t => <Task
