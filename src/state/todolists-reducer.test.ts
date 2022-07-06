@@ -17,9 +17,9 @@ beforeEach(()=>{
 
     startState = [
         {id: todolistId1, title: 'What to learn', filter: 'all', addedDate: 'string',
-            order: 0},
+            order: 0, entityStatus: 'idle'},
         {id: todolistId2, title: 'What to buy', filter: 'all', addedDate: 'string',
-            order: 0}
+            order: 0, entityStatus: 'idle'}
     ]
 })
 

@@ -93,7 +93,7 @@ export function App() {
             </AppBar>
             <Container fixed>
                 <Grid container style={{padding: '20px'}}>
-                    <AddItemForm addItem={addTodolist}/>
+                    <AddItemForm addItem={addTodolist} disabled={true}/>
                 </Grid>
                 <Grid container spacing={3}>
                     {todolists.map(tl => {
@@ -108,6 +108,7 @@ export function App() {
                                     removeTask={removeTask}
                                     changeFilter={changeFilter}
                                     addTask={addTask}
+                                    entityStatus={tl.entityStatus}
                                     ChangeStatus={ChangeStatus}
                                     filter={tl.filter}
                                     removeTodolist={removeTodolist}

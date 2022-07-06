@@ -4,6 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
+    disabled: boolean
 }
 
 export const AddItemForm = memo((props: AddItemFormPropsType) => {
@@ -37,6 +38,7 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
             <TextField
                 id="outlined-basic"
                 size={'small'}
+                disabled={props.disabled}
                 color={'secondary'}
                 label="New something"
                 variant="outlined"
@@ -45,7 +47,7 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
                 onChange={onChangeInputHandler}
                 error={!!error}
                 helperText={error}/>
-            <IconButton onClick={onClickAddTaskButtonHandler}>
+            <IconButton onClick={onClickAddTaskButtonHandler} disabled={props.disabled}>
                 <AddIcon/>
             </IconButton>
         </div>

@@ -1,13 +1,15 @@
 import React, {memo, useCallback, useEffect} from 'react';
 import {AddItemForm} from './AddItemForm';
 import ClearIcon from '@mui/icons-material/Clear';
-import {Button, ButtonGroup} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import {Button, ButtonGroup, IconButton} from '@mui/material';
 import {EditableSpan} from './EditableSpan';
 import {Task} from './Task';
 import {FilterValuesType} from '../state/todolists-reducer';
 import {TaskStatuses, TaskType} from '../api/todolists-api';
 import {fetchTasksTC} from '../state/tasks-reducer';
 import {useTypedDispatch} from '../state/store';
+import {RequestStatusType} from '../state/app-reducer';
 
 type TodolistPropsType = {
     id: string
@@ -15,6 +17,7 @@ type TodolistPropsType = {
     tasks: TaskType[]
     removeTask: (id: string, todolistId: string) => void
     addTask: (title: string, todolistId: string) => void
+    entityStatus: RequestStatusType
     ChangeStatus: (taskId: string, status: TaskStatuses, todolistId: string) => void
     changeFilter: (filter: FilterValuesType, todolistId: string) => void
     filter: FilterValuesType
@@ -35,7 +38,7 @@ export const Todolist = memo((props: TodolistPropsType) => {
     const onCompletedClickHandler = useCallback(() => props.changeFilter('completed', props.id), [props.changeFilter, props.id])
 
 
-    const onClickRemoveTodolistHandler = () => {
+    const RemoveTodolist = () => {
         props.removeTodolist(props.id)
     }
     const addTask = useCallback((title: string) => {
@@ -58,7 +61,9 @@ export const Todolist = memo((props: TodolistPropsType) => {
     return (
         <div>
             <EditableSpan title={props.title} onChange={onChangeTaskTitleHandler}/>
-            <ClearIcon onClick={onClickRemoveTodolistHandler}/>
+            <IconButton onClick={RemoveTodolist} disabled={props.entityStatus === 'loading'} style={{cursor: 'pointer'}}>
+                <DeleteIcon/>
+                </IconButton>
 
             {tasksForTodolist.map(t => <Task
                 key={t.id}
@@ -81,7 +86,7 @@ export const Todolist = memo((props: TodolistPropsType) => {
                         onClick={onCompletedClickHandler}>Completed
                 </Button>
             </ButtonGroup>
-            <AddItemForm addItem={addTask}/>
+            <AddItemForm addItem={addTask} disabled={props.entityStatus === 'loading'}/>
         </div>
     )
         ;
