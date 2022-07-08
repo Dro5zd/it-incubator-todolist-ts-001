@@ -1,5 +1,4 @@
 import React, {useCallback, useEffect} from 'react';
-import {Todolist} from './components/Todolist';
 import {AddItemForm} from './components/AddItemForm';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -24,6 +23,8 @@ import {useSelector} from 'react-redux';
 import {AppRootStateType, useTypedDispatch} from './state/store';
 import {TaskStatuses} from './api/todolists-api';
 import {ErrorSnackbar} from './state/ErrorSnackbar';
+import {Todolist} from './components/Todolist';
+
 
 
 export function App() {
@@ -102,16 +103,14 @@ export function App() {
                         return <Grid item key={tl.id}>
                             <Paper elevation={3} style={{padding: '10px'}}>
                                 <Todolist
+                                    todolist={tl}
                                     key={tl.id}
-                                    id={tl.id}
-                                    title={tl.title}
                                     tasks={tasksForTodolist}
                                     removeTask={removeTask}
                                     changeFilter={changeFilter}
                                     addTask={addTask}
                                     entityStatus={tl.entityStatus}
                                     ChangeStatus={ChangeStatus}
-                                    filter={tl.filter}
                                     removeTodolist={removeTodolist}
                                     onChangeTitleHandler={onChangeTitleHandler}
                                     onChangeTodolistTitleHandler={onChangeTodolistTitleHandler}
