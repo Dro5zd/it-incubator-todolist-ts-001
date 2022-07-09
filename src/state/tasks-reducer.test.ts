@@ -21,7 +21,8 @@ beforeEach(() => {
                 deadline: '',
                 todoListId: 'todolistId1',
                 order: 0,
-                addedDate: ''
+                addedDate: '',
+                entityStatus: 'idle'
             },
             {
                 id: '2', title: 'JS', status: TaskStatuses.Completed,
@@ -31,7 +32,8 @@ beforeEach(() => {
                 deadline: '',
                 todoListId: 'todolistId1',
                 order: 0,
-                addedDate: ''
+                addedDate: '',
+                entityStatus: 'idle'
             },
             {
                 id: '3', title: 'React', status: TaskStatuses.New,
@@ -41,7 +43,8 @@ beforeEach(() => {
                 deadline: '',
                 todoListId: 'todolistId1',
                 order: 0,
-                addedDate: ''
+                addedDate: '',
+                entityStatus: 'idle'
             }
         ],
         'todolistId2': [
@@ -53,7 +56,8 @@ beforeEach(() => {
                 deadline: '',
                 todoListId: 'todolistId2',
                 order: 0,
-                addedDate: ''
+                addedDate: '',
+                entityStatus: 'idle'
             },
             {
                 id: '2', title: 'milk', status: TaskStatuses.Completed,
@@ -63,7 +67,8 @@ beforeEach(() => {
                 deadline: '',
                 todoListId: 'todolistId2',
                 order: 0,
-                addedDate: ''
+                addedDate: '',
+                entityStatus: 'idle'
             },
             {
                 id: '3', title: 'tea', status: TaskStatuses.New,
@@ -73,7 +78,8 @@ beforeEach(() => {
                 deadline: '',
                 todoListId: 'todolistId2',
                 order: 0,
-                addedDate: ''
+                addedDate: '',
+                entityStatus: 'idle'
             }
         ]
     };
@@ -154,7 +160,8 @@ test('correct task should be added to correct array', () => {
         startDate: '',
         deadline: '',
         order: 0,
-        addedDate: ''
+        addedDate: '',
+        entityStatus: 'idle'
     })
 
 

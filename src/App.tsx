@@ -71,7 +71,7 @@ export function App() {
     const onChangeTodolistTitleHandler = useCallback((todolistId: string, newTitle: string,) => {
         dispatch(changeTodolistTitleTC(todolistId, newTitle))
     }, [])
-
+    console.log('todo', todolists)
     return (
         <div className="App">
             <ErrorSnackbar/>

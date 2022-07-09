@@ -90,12 +90,15 @@ export const removeTodolistTC = (id: string) => {
     }
 }
 export const changeTodolistTitleTC = (id: string, title: string) => {
-    return (dispatch: Dispatch<ActionsType>) => {
-
+    return (dispatch: Dispatch<ActionsType | setAppStatusACType>) => {
+        dispatch(setAppStatusAC('loading'))
+        dispatch(changeTodolistEntityStatusAC(id, 'loading'))
         todolistAPI.updateTodolist(id, title)
             .then(res => {
                 if (res.data.resultCode === 0) {
                     dispatch(changeTodolistTitleAC(id, title))
+                    dispatch(setAppStatusAC('succeeded'))
+                    dispatch(changeTodolistEntityStatusAC(id, 'idle'))
                 } else {
                     handleServerAppError(res.data, dispatch)
                 }
