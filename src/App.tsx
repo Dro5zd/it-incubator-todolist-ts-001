@@ -24,6 +24,7 @@ import {AppRootStateType, useTypedDispatch} from './state/store';
 import {TaskStatuses} from './api/todolists-api';
 import {ErrorSnackbar} from './state/ErrorSnackbar';
 import {Todolist} from './components/Todolist';
+import {BrowserRouter} from 'react-router-dom';
 
 
 
@@ -71,8 +72,8 @@ export function App() {
     const onChangeTodolistTitleHandler = useCallback((todolistId: string, newTitle: string,) => {
         dispatch(changeTodolistTitleTC(todolistId, newTitle))
     }, [])
-    console.log('todo', todolists)
     return (
+        <BrowserRouter>
         <div className="App">
             <ErrorSnackbar/>
             <AppBar position="static">
@@ -122,5 +123,6 @@ export function App() {
             </Container>
 
         </div>
+        </BrowserRouter>
     );
 }
