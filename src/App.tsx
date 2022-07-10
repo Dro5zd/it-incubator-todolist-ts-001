@@ -1,29 +1,22 @@
-import React, {useCallback} from 'react';
-import {AddItemForm} from './components/AddItemForm';
+import React from 'react';
+
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import {Container, Grid, LinearProgress} from '@mui/material';
-import {addTodolistTC} from './state/todolists-reducer';
+import {Container, LinearProgress} from '@mui/material';
 import {useSelector} from 'react-redux';
-import {AppRootStateType, useTypedDispatch} from './state/store';
+import {AppRootStateType} from './state/store';
 import {ErrorSnackbar} from './state/ErrorSnackbar';
-import {BrowserRouter} from 'react-router-dom';
+import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
 import {TodolistsList} from './features/TodolistsList/TodolistsList';
+import {Login} from './features/Login/Login';
 
 
 export function App() {
     const status = useSelector<AppRootStateType>(state => state.app.status)
-
-    const dispatch = useTypedDispatch()
-
-    const addTodolist = useCallback((title: string) => {
-        dispatch(addTodolistTC(title))
-    }, [])
-
     return (
         <BrowserRouter>
         <div className="App">
@@ -47,10 +40,12 @@ export function App() {
                 {status === 'loading' && <LinearProgress/>}
             </AppBar>
             <Container fixed>
-                <Grid container style={{padding: '20px'}}>
-                    <AddItemForm addItem={addTodolist} disabled={status === 'loading'}/>
-                </Grid>
-                <TodolistsList/>
+                <Routes>
+                    <Route path='/' element={<TodolistsList/>}></Route>
+                    <Route path='/login' element={<Login/>}></Route>
+                    <Route path='*' element={<Navigate to='/404'/>} />
+                    <Route path='/404' element={<h1>404: PAGE NOT FOUND</h1>} />
+                </Routes>
             </Container>
         </div>
         </BrowserRouter>

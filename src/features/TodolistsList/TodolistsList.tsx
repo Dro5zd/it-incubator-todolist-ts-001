@@ -1,7 +1,8 @@
 import React, {useCallback, useEffect} from 'react';
 import {Grid, Paper} from '@mui/material';
-import {Todolist} from '../../components/Todolist';
+import {Todolist} from './Todolist/Todolist';
 import {
+    addTodolistTC,
     changeTodolistFilterAC,
     changeTodolistTitleTC, fetchTodolistsTC,
     FilterValuesType,
@@ -11,16 +12,21 @@ import {AppRootStateType, useTypedDispatch} from '../../state/store';
 import {addTaskTC, removeTaskTC, TasksStateType, updateTaskTC} from '../../state/tasks-reducer';
 import {TaskStatuses} from '../../api/todolists-api';
 import {useSelector} from 'react-redux';
+import {AddItemForm} from '../../components/AddItemForm';
 
 export const TodolistsList = () => {
 
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
-
+    const status = useSelector<AppRootStateType>(state => state.app.status)
     const dispatch = useTypedDispatch()
 
     useEffect(() => {
         dispatch(fetchTodolistsTC())
+    }, [])
+
+    const addTodolist = useCallback((title: string) => {
+        dispatch(addTodolistTC(title))
     }, [])
 
     const removeTask = useCallback((taskId: string, todolistId: string) => {
@@ -52,6 +58,10 @@ export const TodolistsList = () => {
     }, [])
 
     return (
+        <>
+        <Grid container style={{padding: '20px'}}>
+            <AddItemForm addItem={addTodolist} disabled={status === 'loading'}/>
+        </Grid>
         <Grid container spacing={3}>
             {todolists.map(tl => {
                 let tasksForTodolist = tasks[tl.id];
@@ -73,5 +83,6 @@ export const TodolistsList = () => {
                 </Grid>
             })
             }</Grid>
+        </>
     );
 };

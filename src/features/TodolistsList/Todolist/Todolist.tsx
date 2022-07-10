@@ -1,14 +1,14 @@
-import {TaskStatuses, TaskType} from '../api/todolists-api';
-import {RequestStatusType} from '../state/app-reducer';
-import {FilterValuesType, TodolistDomainType} from '../state/todolists-reducer';
+import {TaskStatuses, TaskType} from '../../../api/todolists-api';
+import {RequestStatusType} from '../../../state/app-reducer';
+import {FilterValuesType, TodolistDomainType} from '../../../state/todolists-reducer';
 import React, {memo, useCallback, useEffect} from 'react';
-import {useTypedDispatch} from '../state/store';
-import {fetchTasksTC} from '../state/tasks-reducer';
-import {EditableSpan} from './EditableSpan';
+import {useTypedDispatch} from '../../../state/store';
+import {fetchTasksTC} from '../../../state/tasks-reducer';
+import {EditableSpan} from '../../../components/EditableSpan';
 import {Button, ButtonGroup, IconButton} from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
-import {Task} from './Task';
-import {AddItemForm} from './AddItemForm';
+import {Task} from '../Task/Task';
+import {AddItemForm} from '../../../components/AddItemForm';
 
 type TodolistPropsType = {
     todolist: TodolistDomainType
@@ -85,6 +85,5 @@ export const Todolist = memo((props: TodolistPropsType) => {
             </ButtonGroup>
             <AddItemForm addItem={addTask} disabled={props.todolist.entityStatus === 'loading'}/>
         </div>
-    )
-        ;
+    );
 });
